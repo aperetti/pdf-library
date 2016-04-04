@@ -2,6 +2,8 @@ package org.composi;
 
 import org.junit.Test;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
@@ -9,9 +11,12 @@ import static org.junit.Assert.*;
 public class PDFWrapperTest {
     private PDFWrapper pdfWrapper;
 
+     String file;
+
     @org.junit.Before
     public void setUp() throws Exception {
-        pdfWrapper = new PDFWrapper("C:\\Users\\peretti\\projects\\standards_directory\\CU\\D\\D0505SC\\D0505SC.pdf");
+        file = PDFWrapperTest.class.getResource("/fw9.pdf").getPath();
+        pdfWrapper = new PDFWrapper(file);
     }
 
     @org.junit.After
@@ -20,43 +25,16 @@ public class PDFWrapperTest {
     }
 
     @org.junit.Test
-    public void matchTextCU() throws Exception {
-        String[] string = pdfWrapper.matchText("[A-Za-z]{2}\\d{2}[A-Za-z]+|[A-Za-z]{1,2}\\d{4}[A-Za-z]{0,3}",true," ");
-        assertEquals(string.length, 6);
-        assertTrue(Arrays.asList(string).contains("D0505INT"));
-        assertTrue(Arrays.asList(string).contains("D0505SC"));
-        assertTrue(Arrays.asList(string).contains("D0505"));
-        assertTrue(Arrays.asList(string).contains("D0506SC"));
-        assertTrue(Arrays.asList(string).contains("N0110"));
-        assertTrue(Arrays.asList(string).contains("N0110"));
-    }
-
-    @org.junit.Test
-    public void matchTextAS() throws Exception {
-        String[] string = pdfWrapper.matchText("(?:12[FVU]|1U|1L|1J|115[FHPVW])\\d{3}(?:A|STL)?",true," ");
-        assertEquals(string.length, 1);
-        assertTrue(Arrays.asList(string).contains("12F713"));
-    }
-
-    @org.junit.Test
-    public void matchTextTD() throws Exception {
-        String[] string = pdfWrapper.matchText("4 ?- ?\\d+ ?- ?\\d+\\.\\d+",true," ");
-        assertEquals(string.length, 0);
-    }
-
-    @org.junit.Test
-    public void matchTextMat() throws Exception {
-        String[] string = pdfWrapper.matchText("(?<=\\s)\\d{6,7}(?=[\\s\\.])",true," ");
-        assertEquals(string.length, 9);
-        assertTrue(Arrays.asList(string).contains("124214"));
-        assertTrue(Arrays.asList(string).contains("124222"));
-        assertTrue(Arrays.asList(string).contains("124602"));
-        assertTrue(Arrays.asList(string).contains("211524"));
-        assertTrue(Arrays.asList(string).contains("412693"));
-        assertTrue(Arrays.asList(string).contains("506743"));
-        assertTrue(Arrays.asList(string).contains("910019"));
-        assertTrue(Arrays.asList(string).contains("1001443"));
-        assertTrue(Arrays.asList(string).contains("1001445"));
+    public void matchTextW9() throws Exception {
+        String[] string = pdfWrapper.matchText("Form \\d{4}",true," ");
+        assertEquals(string.length, 7);
+        assertTrue(Arrays.asList(string).contains("Form2553"));
+        assertTrue(Arrays.asList(string).contains("Form1099"));
+        assertTrue(Arrays.asList(string).contains("Form8233"));
+        assertTrue(Arrays.asList(string).contains("Form1098"));
+        assertTrue(Arrays.asList(string).contains("Form1040"));
+        assertTrue(Arrays.asList(string).contains("Form8832"));
+        assertTrue(Arrays.asList(string).contains("Form1403"));
     }
 
     @Test
