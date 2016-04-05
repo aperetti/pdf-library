@@ -1,9 +1,6 @@
 package org.composi;
 
 import org.junit.Test;
-
-import java.io.InputStream;
-import java.net.URL;
 import java.util.Arrays;
 
 import static org.junit.Assert.*;
