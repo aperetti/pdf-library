@@ -37,7 +37,7 @@ For example, provided the file mapping.txt with the following information:
 
 Running 
 ```
-java -jar pdf-library.jar "\path\to\input\text\file.txt" -m "\path\to\mapping\file.txt"
+java -jar pdf-library.jar "\path\to\input\text\file.txt" -m "\path\to\mapping.txt"
 ```
 
 Will extract all unique occurenses of "Adam Peretti" and phones numbers from each of the PDF files. The output will look something like this:
