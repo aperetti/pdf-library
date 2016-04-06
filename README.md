@@ -12,7 +12,7 @@ Given a text file "pdffiles.txt" with the following data:
 \full\path\to2.pdf
 \full\path\to3.pdf
 ```
-The program will find all occurences of emails (using the regular expression "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\b") and output the to a CSV file with following format.
+By default, the program will find all occurences of emails (using the regular expression "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\b") and output the to a CSV file with following format.
 output.csv
 ```
 \full\path\to1.pdf, email, john.smith@eml.com
