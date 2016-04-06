@@ -25,6 +25,7 @@ class Extract {
 
     private List<String> fileList;
 
+    private Map<String, String> map;
     boolean pdfFromGit = true;
     private String homePath;
 
@@ -35,11 +36,12 @@ class Extract {
             PDFWrapper pdfWrapper;
             CSVPrinter csvPrinter = getCSVPrinter();
             constructFileList();
+            map = getRegexMap();
 
             for(String filePath : fileList){
                 try {
                     pdfWrapper = pdfFromGit ? new PDFWrapper(homePath + filePath) : new PDFWrapper(filePath);
-                    for (Map.Entry<String, String> entry : Pud.map.entrySet()) {
+                    for (Map.Entry<String, String> entry : map.entrySet()) {
                         String[] matches = pdfWrapper.matchText(entry.getValue(),true," ");
                         if (matches.length > 0) {
                             for (String match : matches) {
@@ -104,7 +106,7 @@ class Extract {
                 CSVParser csvParser = new CSVParser(inputStreamReader,CSVFormat.DEFAULT);
                 List<CSVRecord> list = csvParser.getRecords();
                 fileList = new ArrayList<String>();
-                for (CSVRecord record : list){
+                for (CSVRecord record : list) {
                     fileList.add(record.get(0));
                 }
             }catch(FileNotFoundException e){
@@ -115,23 +117,27 @@ class Extract {
         }
     }
 
-    private Map<String, String> getRegexMap(){
-        File inputFile = new File(mapPath);
-        Map<String, String> map = new HashMap<String, String>();
-        try {
-            InputStream inputStream = new FileInputStream(inputFile);
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-            CSVParser csvParser = new CSVParser(inputStreamReader,CSVFormat.DEFAULT);
+    private Map<String, String> getRegexMap() {
+        if (mapPath == null) {
+            return EmailRegex.map;
+        } else {
+            File inputFile = new File(mapPath);
+            Map<String, String> map = new HashMap<String, String>();
+            try {
+                InputStream inputStream = new FileInputStream(inputFile);
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                CSVParser csvParser = new CSVParser(inputStreamReader, CSVFormat.DEFAULT);
 
-            fileList = new ArrayList<String>();
-            for (CSVRecord record : csvParser){
-                map.put(record.get(0),record.get(1));
+                fileList = new ArrayList<String>();
+                for (CSVRecord record : csvParser) {
+                    map.put(record.get(0), record.get(1));
+                }
+            } catch (FileNotFoundException e) {
+                System.err.println(e.getMessage());
+            } catch (IOException e) {
+                System.err.println(e.getMessage());
             }
-        }catch(FileNotFoundException e){
-            System.err.println(e.getMessage());
-        }catch (IOException e){
-            System.err.println(e.getMessage());
+            return map;
         }
-        return map;
     }
 }
