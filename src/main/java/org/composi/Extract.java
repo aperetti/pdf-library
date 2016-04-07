@@ -26,7 +26,7 @@ class Extract {
     private List<String> fileList;
 
     private Map<String, String> map;
-    boolean pdfFromGit = true;
+    private boolean pdfFromGit = true;
     private String homePath;
 
     void run(){
@@ -58,6 +58,7 @@ class Extract {
                     System.out.println(e.getMessage());
                 }
             }
+            csvPrinter.close();
         } catch (IOException e){
             System.err.println(e.getMessage());
             //TODO: Catch Invalid directory
@@ -76,6 +77,7 @@ class Extract {
         }
         file = new File(outputPath);
         file.delete();
+        file = new File(outputPath);
         FileOutputStream outputStream = new FileOutputStream(file);
         OutputStreamWriter output= new OutputStreamWriter(outputStream);
         return new CSVPrinter(output, CSVFormat.EXCEL);
@@ -127,8 +129,6 @@ class Extract {
                 InputStream inputStream = new FileInputStream(inputFile);
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
                 CSVParser csvParser = new CSVParser(inputStreamReader, CSVFormat.DEFAULT);
-
-                fileList = new ArrayList<String>();
                 for (CSVRecord record : csvParser) {
                     map.put(record.get(0), record.get(1));
                 }
