@@ -40,7 +40,7 @@ Running
 java -jar pdf-library.jar "\path\to\input\text\file.txt" -m "\path\to\mapping.txt"
 ```
 
-Will extract all unique occurenses of "Adam Peretti" and phones numbers from each of the PDF files. The output will look something like this:
+Will extract all unique occurrences of "Adam Peretti" and phones numbers from each of the PDF files. The output will look something like this:
 ```
 \full\path\to1.pdf, myname, Adam Peretti
 \full\path\to2.pdf, myname, Adam Peretti
